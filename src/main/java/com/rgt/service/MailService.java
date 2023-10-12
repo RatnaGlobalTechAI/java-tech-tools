@@ -9,6 +9,8 @@ public interface MailService {
 
 	ResponseObject sendDataByEmail(String senders);
 
+	public ResponseObject getNotification(UserRequest userRequest);
+
 	ResponseObject sendDataByEmailWithBody(UserRequest userRequest);
 
 	void sendEmail(String toMail, String subject, String messageBody);
