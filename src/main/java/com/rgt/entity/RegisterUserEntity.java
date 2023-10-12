@@ -1,52 +1,54 @@
 package com.rgt.entity;
 
-import java.io.Serializable;
 import java.util.Date;
+import org.springframework.data.annotation.Transient;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "register_user")
-public class RegisterUserEntity implements Serializable {
+//@Entity
+//@Table(name = "register_user")
+@Document(collection = "register_user")
+public class RegisterUserEntity {
 	
-	 private static final long serialVersionUID = -3492266417550204992L;
+	 
+	 @Transient
+	 public static final String SEQUENCE_NAME = "users_sequence";
 	
 	
 	 @Id
-	@Column(name = "USERNAME")
+	 private long id;
+	//@Column(name = "USERNAME")
 	private String username;
 	
-	@Column(name = "ADDRESS")
+	//@Column(name = "ADDRESS")
 	private String address;
 	
-	@Column(name = "CITY")
+	//@Column(name = "CITY")
 	private String city;
 	
-	@Column(name = "PINCODE")
+	//@Column(name = "PINCODE")
 	private String pincode;
 	
-	@Column(name = "DOB")
+	//@Column(name = "DOB")
 	private String dob;
 	
-	@Column(name = "CREATED_ON")
+	//@Column(name = "CREATED_ON")
 	private Date createdOn;
 	
-	@Column(name = "UPDATED_ON")
+	//@Column(name = "UPDATED_ON")
 	private Date updatedOn;
 	
-	@Column(name = "EMAIL_ID", unique = true)
+	//@Column(name = "EMAIL_ID", unique = true)
     private String emailId;
 
-    @Column(name = "PASSWORD")
+    //@Column(name = "PASSWORD")
     private String password;
 
-    @Column(name = "EMAIL_VERIFIED")
+   // @Column(name = "EMAIL_VERIFIED")
     private boolean isEmailVerified;
 
-    @Column(name = "IS_ACTIVE")
+    //@Column(name = "IS_ACTIVE")
     private boolean isActive;
 	
 	
@@ -69,6 +71,18 @@ public class RegisterUserEntity implements Serializable {
 	}
 	
 	
+
+	public long getId() {
+		return id;
+	}
+
+
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+
 
 	public String getEmailId() {
 		return emailId;

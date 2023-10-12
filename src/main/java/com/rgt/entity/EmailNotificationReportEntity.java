@@ -2,45 +2,41 @@ package com.rgt.entity;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
-@Entity
-@Table(name = "email_notification_report")
+//@Entity
+//@Table(name = "email_notification_report")
+@Document("email_notification_report")
 public class EmailNotificationReportEntity {
 	
 	
 	@Id
-	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	//@Column(name = "ID")
+	private long id;
 	
-	@Column(name = "EMAIL")
+	//@Column(name = "EMAIL")
 	private String email;
 	
 
-	@Column(name = "MESSAGE_BODY")
+	//@Column(name = "MESSAGE_BODY")
 	private String message;
 	
-	@Column(name = "STATUS")
+	//@Column(name = "STATUS")
 	private String status;
 	
-	@Column(name = "USERNAME")
+	//@Column(name = "USERNAME")
 	private String username;
 	
-	@Column(name = "NOTIFICATION_SENT_ON")
+	//@Column(name = "NOTIFICATION_SENT_ON")
 	private Date notificationSentOn;
 
-	public Integer getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

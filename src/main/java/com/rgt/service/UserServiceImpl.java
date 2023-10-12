@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutionException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,7 +47,10 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private JwtUtils jwtUtils;
+	
 
+	@Autowired
+	private SequenceGeneratorService sequenceGeneratorService;
 	@Override
 	public ResponseEntity<?> createAccount(UserRequest userRequest) {
 		
@@ -54,6 +58,8 @@ public class UserServiceImpl implements UserService{
 			throw new ResponseStatusException(HttpStatus.CONFLICT, "User account already exists for provided email");
 		
 		RegisterUserEntity registerUserEntity = new RegisterUserEntity();
+		registerUserEntity.setId(sequenceGeneratorService.generateSequence(RegisterUserEntity.SEQUENCE_NAME));
+		
 		registerUserEntity.setEmailId(userRequest.getEmailId());
 		registerUserEntity.setPassword(passwordEncoder.encode(userRequest.getPassword()));
 		registerUserEntity.setEmailVerified(true);
@@ -207,5 +213,7 @@ public class UserServiceImpl implements UserService{
 		}
 		
 	}
+	
+	
 
 }

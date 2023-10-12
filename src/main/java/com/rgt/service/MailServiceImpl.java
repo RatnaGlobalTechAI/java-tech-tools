@@ -35,6 +35,9 @@ public class MailServiceImpl implements MailService {
 	
 	@Autowired
 	private EmailNotificationReportRepository emailNotificationReportRepository; 
+	
+	@Autowired
+	private SequenceGeneratorService sequenceGeneratorService;
 
 	@Override
 	public ResponseObject sendDataByEmail(String senders) {
@@ -167,6 +170,7 @@ public class MailServiceImpl implements MailService {
 			String username) {
 		
 		EmailNotificationReportEntity emailNotificationReportEntity = new EmailNotificationReportEntity();
+		emailNotificationReportEntity.setId(sequenceGeneratorService.generateSequence(RegisterUserEntity.SEQUENCE_NAME));
 		emailNotificationReportEntity.setEmail(senders);
 		emailNotificationReportEntity.setMessage(messageBody);
 		emailNotificationReportEntity.setNotificationSentOn(notificationSendOn);

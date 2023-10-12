@@ -32,7 +32,7 @@ public class EmailController {
 		return response;
 	}
 
-	@PostMapping(value = URLConstant.SendDataViaMail)
+	@PostMapping(value = URLConstant.SendMail)
 	public ResponseObject sendUserEmail(@RequestBody UserRequest userRequest) {
 		ResponseObject response = mailService.sendDataByEmailWithBody(userRequest);    //mailService.sendDataByEmail(senders);
 		if (response == null || response.equals(""))
