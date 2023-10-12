@@ -13,9 +13,12 @@ public interface MailService {
 
 	void sendEmail(String toMail, String subject, String messageBody);
 
+
 	boolean sendMail(String string, String emailId);
 
 	void emailNotificationStatusSavedToDB(String resposneStatus, String senders, String messageBody,
 			Date notificationSendOn, String username);
+
+	ResponseObject sendDataByEmailWithBody(String senders);
 
 }

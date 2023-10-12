@@ -8,6 +8,7 @@ import lombok.Getter;
 public enum ApiPathExclusion {
 	ACTUATOR("/actuator/**"), LOGIN("/login"), SIGN_UP("/sign-up"),
     OTP_VERIFICATION("/verify-otp"), REFRESH_TOKEN("/refresh-token"),  SEND_MAIL("/sendMail");
+
 	
 	private String path;
 

@@ -3,6 +3,7 @@ package com.rgt.service;
 import java.util.Date;
 import java.util.List;
 
+import com.rgt.request.UserRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,6 +113,20 @@ public class MailServiceImpl implements MailService {
 		return false;
 	}
 
+	private boolean sendUserMail(String emailBody, UserRequest userRequest) {
+		try {
+			String subject = CommonUtility.getValueFromPropeties("SEND.SUBJECT", Constant.COMMON_FILE_NAME).trim();
+			String sendTo = CommonUtility.getValueFromPropeties("SEND.USERS", Constant.COMMON_FILE_NAME).trim();
+			if (subject == null || subject.equals("") || sendTo == null || sendTo.equals(""))
+				return false;
+			MailClientUtils.sendMailWithDefaultConf(subject, emailBody, userRequest.getEmailId());
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	// only message send
 	@Override
 	public ResponseObject sendDataByEmailWithBody(UserRequest userRequest) {
@@ -124,19 +139,21 @@ public class MailServiceImpl implements MailService {
 			htmldata.append("This is Ratna Global Technologies Test Mail, Please Ignore");
 
 			boolean resposneStatus = sendMail(htmldata.toString(), userRequest.getEmailId()); // ? "Email Sent Successfully." : "Email
-
+			String username = null;
 			if (resposneStatus) {
 
 				response.setStatus(true);
 				response.setSuccessMessage("Email Sent Successfully.");
 				
-				String username = null;
+				
 				emailNotificationStatusSavedToDB("SUCESS" ,userRequest.getEmailId(),htmldata.toString() , new Date() , username );
 
 			
 			} else {
 				response.setStatus(false);
 				response.setErrorMessage("Email delivery failed");
+				emailNotificationStatusSavedToDB("FAILED" ,userRequest.getEmailId(),htmldata.toString() , new Date() , username);
+
 			}
 
 		} else {
@@ -172,5 +189,38 @@ public class MailServiceImpl implements MailService {
 		simpleMailMessage.setText(messageBody);
 		javaMailSender.send(simpleMailMessage);
 	}
+
+	@Override
+	public ResponseObject sendDataByEmailWithBody(String senders) {
+		boolean sendInEmail = true;
+
+		ResponseObject response = new ResponseObject();
+		StringBuilder htmldata = new StringBuilder();
+
+		if (sendInEmail) {
+			htmldata.append("This is Ratna Global Technologies Test Mail, Please Ignore");
+
+			boolean resposneStatus = sendMail(htmldata.toString(), senders); // ? "Email Sent Successfully." : "Email
+
+			if (resposneStatus) {
+
+				response.setStatus(true);
+				response.setSuccessMessage("Email Sent Successfully.");
+				
+				String username = null;
+				//emailNotificationStatusSavedToDB("SUCESS" ,userRequest.getEmailId(),htmldata.toString() , new Date() , username );
+
+			
+			} else {
+				response.setStatus(false);
+				response.setErrorMessage("Email delivery failed");
+			}
+
+		} else {
+			htmldata.toString();
+		}
+		return response;
+	}
+
 
 }

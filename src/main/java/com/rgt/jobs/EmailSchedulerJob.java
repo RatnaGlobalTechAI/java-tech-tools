@@ -82,11 +82,14 @@ public class EmailSchedulerJob {
 
 									logger.info("Email Send Successfully");
 									
-									mailService.emailNotificationStatusSavedToDB("SUCESS" ,registerUserEntity.getEmailId(),htmldata.toString() , new Date() , registerUserEntity.getUsername() );
+									mailService.emailNotificationStatusSavedToDB("SUCCESS" ,registerUserEntity.getEmailId(),htmldata.toString() , new Date() , registerUserEntity.getUsername() );
 
 
 								} else {
 									logger.info("Email delivery failed");
+									
+									mailService.emailNotificationStatusSavedToDB("FAILED" ,registerUserEntity.getEmailId(),htmldata.toString() , new Date() , registerUserEntity.getUsername() );
+
 								}
 
 							} else {

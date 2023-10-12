@@ -3,7 +3,6 @@ package com.rgt.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,10 +24,19 @@ public class EmailController {
 	private static Logger logger = LogManager.getLogger(EmailController.class);
 	
 	@PostMapping(value = URLConstant.SendDataViaMail)
-	public ResponseObject sendBaseReport(@RequestBody UserRequest userRequest) {
-		ResponseObject response = mailService.sendDataByEmailWithBody(userRequest);    //mailService.sendDataByEmail(senders);
+	public ResponseObject sendBaseReport(@RequestParam String senders) {
+		ResponseObject response = mailService.sendDataByEmailWithBody(senders);    //mailService.sendDataByEmail(senders);
 		if (response == null || response.equals(""))
 			response.setErrorMessage("Error In Reporting");  
+		logger.info("sendBaseReport() - " + response);
+		return response;
+	}
+
+	@PostMapping(value = URLConstant.SendDataViaMail)
+	public ResponseObject sendUserEmail(@RequestBody UserRequest userRequest) {
+		ResponseObject response = mailService.sendDataByEmailWithBody(userRequest);    //mailService.sendDataByEmail(senders);
+		if (response == null || response.equals(""))
+			response.setErrorMessage("Error In Reporting");
 		logger.info("sendBaseReport() - " + response);
 		return response;
 	}
