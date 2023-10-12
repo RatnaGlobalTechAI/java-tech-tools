@@ -173,7 +173,7 @@ public class MailServiceImpl implements MailService {
         ResponseObject response = new ResponseObject();
         response.setStatus(true);
         response.setSuccessMessage("Email Retried Successfully");
-        response.setReportEntityList(entityByEmail);
+        response.setNotifications(entityByEmail);
 
         return response;
     }

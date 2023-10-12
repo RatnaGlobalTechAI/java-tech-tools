@@ -11,7 +11,7 @@ public class ResponseObject {
     boolean status = true;
     Object response;
 
-    List<EmailNotificationReportEntity> reportEntityList;
+    List<EmailNotificationReportEntity> notifications;
     String errorMessage;
     String successMessage;
     private String info;
@@ -80,12 +80,12 @@ public class ResponseObject {
         this.errorType = errorType;
     }
 
-    public List<EmailNotificationReportEntity> getReportEntityList() {
-        return reportEntityList;
+    public List<EmailNotificationReportEntity> getNotifications() {
+        return notifications;
     }
 
-    public void setReportEntityList(List<EmailNotificationReportEntity> reportEntityList) {
-        this.reportEntityList = reportEntityList;
+    public void setNotifications(List<EmailNotificationReportEntity> notifications) {
+        this.notifications = notifications;
     }
 
     @Override
@@ -93,7 +93,7 @@ public class ResponseObject {
         return "ResponseObject{" +
                 "status=" + status +
                 ", response=" + response +
-                ", reportEntityList=" + reportEntityList +
+                ", notifications=" + notifications +
                 ", errorMessage='" + errorMessage + '\'' +
                 ", successMessage='" + successMessage + '\'' +
                 ", info='" + info + '\'' +
