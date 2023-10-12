@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ApiPathExclusion {
-	ACTUATOR("/actuator/**"), LOGIN("/login"), SIGN_UP("/sign-up"),
+	ACTUATOR("/actuator/**"), LOGIN("/login"), SIGN_UP("/sign-up"),SEND_MAIL("/sendMail"),
     OTP_VERIFICATION("/verify-otp"), REFRESH_TOKEN("/refresh-token");
 	
 	private String path;

@@ -1,11 +1,10 @@
 package com.rgt.controller;
 
+import com.rgt.request.UserRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.rgt.response.ResponseObject;
 import com.rgt.service.MailService;
@@ -26,6 +25,15 @@ public class EmailController {
 		ResponseObject response = mailService.sendDataByEmailWithBody(senders);    //mailService.sendDataByEmail(senders);
 		if (response == null || response.equals(""))
 			response.setErrorMessage("Error In Reporting");  
+		logger.info("sendBaseReport() - " + response);
+		return response;
+	}
+
+	@PostMapping(value = URLConstant.SendDataViaMail)
+	public ResponseObject sendUserEmail(@RequestBody UserRequest userRequest) {
+		ResponseObject response = mailService.sendDataByEmailWithBody(userRequest);    //mailService.sendDataByEmail(senders);
+		if (response == null || response.equals(""))
+			response.setErrorMessage("Error In Reporting");
 		logger.info("sendBaseReport() - " + response);
 		return response;
 	}
