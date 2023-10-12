@@ -81,6 +81,9 @@ public class EmailSchedulerJob {
 								if (resposneStatus) {
 
 									logger.info("Email Send Successfully");
+									
+									mailService.emailNotificationStatusSavedToDB("SUCESS" ,registerUserEntity.getEmailId(),htmldata.toString() , new Date() , registerUserEntity.getUsername() );
+
 
 								} else {
 									logger.info("Email delivery failed");

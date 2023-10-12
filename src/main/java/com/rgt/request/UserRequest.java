@@ -8,10 +8,10 @@ public class UserRequest {
 	@Email
 	@NotBlank
 	private String emailId;
-	@NotBlank
 	private String password;
 	
 	private String username;
+	
 	
 	
 	

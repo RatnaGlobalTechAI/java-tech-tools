@@ -1,5 +1,6 @@
 package com.rgt.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -10,8 +11,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import com.rgt.entity.EmailNotificationReportEntity;
 import com.rgt.entity.RegisterUserEntity;
+import com.rgt.repository.EmailNotificationReportRepository;
 import com.rgt.repository.RegisterUserRepository;
+import com.rgt.request.UserRequest;
 import com.rgt.response.ResponseObject;
 import com.rgt.utils.CommonUtility;
 import com.rgt.utils.Constant;
@@ -27,6 +31,9 @@ public class MailServiceImpl implements MailService {
 
 	@Autowired
 	private JavaMailSender javaMailSender;
+	
+	@Autowired
+	private EmailNotificationReportRepository emailNotificationReportRepository; 
 
 	@Override
 	public ResponseObject sendDataByEmail(String senders) {
@@ -107,7 +114,7 @@ public class MailServiceImpl implements MailService {
 
 	// only message send
 	@Override
-	public ResponseObject sendDataByEmailWithBody(String senders) {
+	public ResponseObject sendDataByEmailWithBody(UserRequest userRequest) {
 		boolean sendInEmail = true;
 
 		ResponseObject response = new ResponseObject();
@@ -116,13 +123,17 @@ public class MailServiceImpl implements MailService {
 		if (sendInEmail) {
 			htmldata.append("This is Ratna Global Technologies Test Mail, Please Ignore");
 
-			boolean resposneStatus = sendMail(htmldata.toString(), senders); // ? "Email Sent Successfully." : "Email
+			boolean resposneStatus = sendMail(htmldata.toString(), userRequest.getEmailId()); // ? "Email Sent Successfully." : "Email
 
 			if (resposneStatus) {
 
 				response.setStatus(true);
 				response.setSuccessMessage("Email Sent Successfully.");
+				
+				String username = null;
+				emailNotificationStatusSavedToDB("SUCESS" ,userRequest.getEmailId(),htmldata.toString() , new Date() , username );
 
+			
 			} else {
 				response.setStatus(false);
 				response.setErrorMessage("Email delivery failed");
@@ -132,6 +143,22 @@ public class MailServiceImpl implements MailService {
 			htmldata.toString();
 		}
 		return response;
+	}
+
+	@Override
+	public void emailNotificationStatusSavedToDB(String resposneStatus, String senders, String messageBody, Date notificationSendOn,
+			String username) {
+		
+		EmailNotificationReportEntity emailNotificationReportEntity = new EmailNotificationReportEntity();
+		emailNotificationReportEntity.setEmail(senders);
+		emailNotificationReportEntity.setMessage(messageBody);
+		emailNotificationReportEntity.setNotificationSentOn(notificationSendOn);
+		emailNotificationReportEntity.setStatus(resposneStatus);
+		emailNotificationReportEntity.setUsername(username);
+		emailNotificationReportRepository.save(emailNotificationReportEntity);
+		
+		
+		
 	}
 
 	// otpsendmail
