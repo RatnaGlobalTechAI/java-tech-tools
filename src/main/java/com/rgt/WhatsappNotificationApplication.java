@@ -1,13 +1,13 @@
-package com.book;
+package com.rgt;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BookStoreApplication {
+public class WhatsappNotificationApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BookStoreApplication.class, args);
+		SpringApplication.run(WhatsappNotificationApplication.class, args);
 	}
 
 }
