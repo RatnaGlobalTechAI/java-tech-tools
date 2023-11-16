@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.rgt.entity.FileTransferEntity;
 
 @Repository
-public interface FileTransferRepository extends MongoRepository<FileTransferEntity , String>{
+public interface FileTransferRepository extends MongoRepository<FileTransferEntity , Long>{
 
 }
